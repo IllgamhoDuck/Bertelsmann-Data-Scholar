@@ -2,14 +2,23 @@
 1. Find the total amount of poster_qty paper ordered in the orders table.
 */
 
+SELECT COUNT(o.poster_qty)
+FROM orders o;
+
 /*
 2. Find the total amount of standard_qty paper ordered in the orders table.
 */
+
+SELECT COUNT(o.standard_qty)
+FROM orders o;
 
 /*
 3. Find the total dollar amount of sales using
 the total_amt_usd in the orders table.
 */
+
+SELECT SUM(o.total_amt_usd)
+FROM orders o;
 
 /*
 4. Find the total amount spent on standard_amt_usd and gloss_amt_usd paper
