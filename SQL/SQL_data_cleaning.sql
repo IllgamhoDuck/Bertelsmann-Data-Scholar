@@ -204,3 +204,59 @@ JOIN primary_poc p
 ON a.name = p.name
 JOIN company c
 ON a.name = c.name;
+
+-----------------
+----- CAST ------
+-----------------
+
+/*
+1. Write a query to look at the top 10 rows to understand the columns
+and the raw data in the dataset calld sf_crime_data
+*/
+
+SELECT *
+FROM sf_crime_data
+LIMIT 10;
+
+/*
+2. Look at the data column in the sf_crime_data.
+Notice the date in the correct format.
+*/
+
+SELECT date
+FROM sf_crime_data
+LIMIT 10;
+
+/*
+3. Write a query to change the date into the correct SQL date format.
+You will need to use at least SUBSTR and CONCAT to perform this operation.
+*/
+
+SELECT date,
+          SUBSTR(date, 7, 4)
+       || '-'
+       || SUBSTR(date, 1, 2)
+       || '-'
+       || SUBSTR(date, 4, 2)
+       AS formatted_date
+FROM sf_crime_data;
+
+/*
+4. Once you have created a column in the correct format,
+use either CAST of :: to convert this to a date
+*/
+
+WITH formatted_date AS (SELECT id,
+                                 SUBSTR(date, 7, 4)
+                               || '-'
+                               || SUBSTR(date, 1, 2)
+                               || '-'
+                               || SUBSTR(date, 4, 2)
+                               AS formatted_date
+                        FROM sf_crime_data)
+
+SELECT s.date,
+       f.formatted_date::date
+FROM sf_crime_data s
+JOIN formatted_date f
+ON s.id = f.id;
