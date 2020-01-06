@@ -1,3 +1,7 @@
+------------------------
+----- LEFT & RIGHT -----
+------------------------
+
 /*
 1. In the accounts table, there is a column holding the website
 for each company. The last three digits specify what type of web address
@@ -46,7 +50,7 @@ WITH total AS (SELECT COUNT(*) AS total
 SELECT num_company.type,
        CAST(num_company.num_of_company AS FLOAT) /
        CAST((SELECT total FROM total) AS FLOAT) AS proportion
-FROM num_company
+FROM num_company;
 
 /*
 4. Consider vowels as a, e, i, o, and u. What proportion of
@@ -67,4 +71,38 @@ WITH total AS (SELECT COUNT(*) AS total
 SELECT num_company.type,
        CAST(num_company.num_of_company AS FLOAT) /
        CAST((SELECT total FROM total) AS FLOAT) AS proportion
-FROM num_company
+FROM num_company;
+
+-------------------------------------
+----- POSITION, STRPOS, SUBSTR ------
+-------------------------------------
+
+/*
+1. Use the accounts table to create first and last name columns that
+hold the first and last names for the primary_poc.
+*/
+
+-- POSITION
+SELECT LEFT(primary_poc, POSITION(' ' IN primary_poc) - 1) AS first,
+       RIGHT(primary_poc, LENGTH(primary_poc) - POSITION(' ' IN primary_poc)) AS last
+FROM accounts;
+
+-- STRPOS
+SELECT LEFT(primary_poc, STRPOS(primary_poc, ' ') - 1) AS first,
+       RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) AS last
+FROM accounts;
+
+/*
+2. Now see if you can do the same thing for every rep name
+in the sales_reps table. Again provide first and last name columns.
+*/
+
+-- POSITION
+SELECT LEFT(name, POSITION(' ' IN name) - 1) AS first,
+       RIGHT(name, LENGTH(name) - POSITION(' ' IN name)) AS last
+FROM sales_reps;
+
+-- STRPOS
+SELECT LEFT(name, STRPOS(name, ' ') - 1) AS first,
+       RIGHT(name, LENGTH(name) - STRPOS(name, ' ')) AS last
+FROM sales_reps;
